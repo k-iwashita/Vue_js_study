@@ -9,16 +9,44 @@
     <script src="vue.js"></script>
 
     <div id="app">
-      <p>{{message}}</p>
+      <p v-once>{{ message }}</p>
+      <!-- ディレクティブ　＝　vue.jsオリジナルの属性のこと -->
+      <p v-text="message"></p>
+      <p>{{ number }}</p>
+      <p>{{ ok ? 'YES' : 'NO' }}</p>
+      <p>{{ sayhi() }}</p>
       <button v-on:click="reverseMessage">メッセージ反転</button>
+
+      <div v-html='html'>{{ html }}</div>
+      <a v-bind:href="url">Google</a>
+      <!-- ↓省略形 -->
+      <a :[attribute]="url">Google</a>
+      <a :[attribute]="urlTwi">Twitter</a>
+      <a v-bind="{href: url, id: number}">Google</a>
+      <a v-bind='twitterObj'>Twitter</a>
     </div>
+
     <script>
       new Vue({
         el: "#app",
         data: {
           message: "Hello, World!",
+          number: 3,
+          ok: false,
+          html: '<h1>Kenshoです</h1>',
+          url: 'https://google.com',
+          urlTwi: 'https://twitter.com',
+          attribute: 'href',
+          twitterObj: {
+            href: 'https://twitter.com',
+            id: 31
+          }
         },
         methods: {
+          sayhi: function () {
+            this.message = "Hello, vue";
+            return this.message;
+          },
           reverseMessage: function () {
             this.message = this.message.split("").reverse().join("");
           },
