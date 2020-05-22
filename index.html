@@ -17,13 +17,18 @@
       <p>{{ sayhi() }}</p>
       <button v-on:click="reverseMessage">メッセージ反転</button>
 
-      <div v-html='html'>{{ html }}</div>
+      <div v-html="html">{{ html }}</div>
       <a v-bind:href="url">Google</a>
       <!-- ↓省略形 -->
       <a :[attribute]="url">Google</a>
       <a :[attribute]="urlTwi">Twitter</a>
       <a v-bind="{href: url, id: number}">Google</a>
-      <a v-bind='twitterObj'>Twitter</a>
+      <a v-bind="twitterObj">Twitter</a>
+      <br />
+      <p>現在{{ num }}回クリックされています</p>
+      <button v-on:click="countUp(2)">カウントアップ</button>
+      <p v-on:mousemove="changeMousePosition($event, 10)">マウスを載せてください</p>
+      <p>X:{{ x }}, Y: {{ y }}</p>
     </div>
 
     <script>
@@ -33,14 +38,17 @@
           message: "Hello, World!",
           number: 3,
           ok: false,
-          html: '<h1>Kenshoです</h1>',
-          url: 'https://google.com',
-          urlTwi: 'https://twitter.com',
-          attribute: 'href',
+          html: "<h1>Kenshoです</h1>",
+          url: "https://google.com",
+          urlTwi: "https://twitter.com",
+          attribute: "href",
           twitterObj: {
-            href: 'https://twitter.com',
-            id: 31
-          }
+            href: "https://twitter.com",
+            id: 31,
+          },
+          num: 0,
+          x: 0,
+          y: 0
         },
         methods: {
           sayhi: function () {
@@ -50,6 +58,15 @@
           reverseMessage: function () {
             this.message = this.message.split("").reverse().join("");
           },
+          countUp: function(times){
+            this.num += 1 * times
+          },
+          changeMousePosition: function(event, divideNumver){
+            // ひきすうにeventを置くだけで、イベントオブジェクトを取得できる。
+            console.log(event);
+            this.x = event.clientX / divideNumver;
+            this.y = event.clientY / divideNumver;
+          }
         },
       });
     </script>
